@@ -7,11 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "SecondViewController.h"
 
-@interface ViewController ()
+@interface ViewController () <SecondViewControllerDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 
-
-@property (nonatomic) UIView *redView;
 
 @end
 
@@ -21,93 +21,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    
-//    self.redView = [[UIView alloc] initWithFrame:CGRectZero];
-//    self.redView.backgroundColor = [UIColor redColor];
-//    self.redView.translatesAutoresizingMaskIntoConstraints = false;
-//    
-//    [self.view addSubview:self.redView];
-//
-//    [self.view addConstraint:[NSLayoutConstraint
-//                              constraintWithItem:self.view
-//                              attribute:NSLayoutAttributeTop
-//                              relatedBy:NSLayoutRelationEqual
-//                              toItem:self.redView
-//                              attribute:NSLayoutAttributeTop
-//                              multiplier:1
-//                              constant:0]];
-//    
-//    [self.view addConstraint:[NSLayoutConstraint
-//                              constraintWithItem:self.redView
-//                              attribute:NSLayoutAttributeLeading
-//                              relatedBy:NSLayoutRelationEqual
-//                              toItem:self.view
-//                              attribute:NSLayoutAttributeLeading
-//                              multiplier:1
-//                              constant:50]];
-//    
-//    [self.view addConstraint:[NSLayoutConstraint
-//                              constraintWithItem:self.redView
-//                              attribute:NSLayoutAttributeWidth
-//                              relatedBy:NSLayoutRelationEqual
-//                              toItem:nil
-//                              attribute:NSLayoutAttributeNotAnAttribute
-//                              multiplier:1
-//                              constant:200]];
-//    
-//    [self.view addConstraint:[NSLayoutConstraint
-//                              constraintWithItem:self.redView
-//                              attribute:NSLayoutAttributeHeight
-//                              relatedBy:NSLayoutRelationEqual
-//                              toItem:nil
-//                              attribute:NSLayoutAttributeNotAnAttribute
-//                              multiplier:1
-//                              constant:200]];
-//    
-//    
-//    
-//    
-//    
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-//    label.translatesAutoresizingMaskIntoConstraints = false;
-//    label.text = @"Hello Class";
-//    
-//    [self.redView addSubview:label];
-//    
-//    [self.redView addConstraint:[NSLayoutConstraint
-//                              constraintWithItem:label
-//                              attribute:NSLayoutAttributeTop
-//                              relatedBy:NSLayoutRelationEqual
-//                              toItem:self.redView
-//                              attribute:NSLayoutAttributeTop
-//                              multiplier:1
-//                              constant:0]];
-//    
-//    [self.redView addConstraint:[NSLayoutConstraint
-//                              constraintWithItem:label
-//                              attribute:NSLayoutAttributeLeading
-//                              relatedBy:NSLayoutRelationEqual
-//                              toItem:self.redView
-//                              attribute:NSLayoutAttributeLeading
-//                              multiplier:1
-//                              constant:0]];
+    NSLog(@"inside viewDidLoad");
 
-
-//    [self moveBox];
-    
-
-    
-    
 }
 
--(void) moveBox {
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     
-    [UIView animateWithDuration:2.0 animations:^{
-        
-        self.redView.frame = CGRectMake(0, 0, 200, 200);
-        
-    }];
-    
+    NSLog(@"inside viewWillAppear");
 }
 
 
@@ -116,5 +37,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if ([segue.identifier isEqualToString:@"toSecondViewController"]){
+        
+        
+        SecondViewController *sVC = (SecondViewController *) segue.destinationViewController;
+        
+        sVC.textPassedFromVC = self.usernameTextField.text;
+        //sVC.delegate = self;
+        
+    }
+    
+    
+}
+
+-(void)passTextToNextVC:(NSString *)text{
+    
+    self.usernameTextField.text = text;
+}
 
 @end
